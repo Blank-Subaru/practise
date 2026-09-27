@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        button {
+            padding: 10px 25px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+
+        .image-box {
+            width: 250px;
+            height: 250px;
+            border: 2px solid black;
+            margin: auto;
+        }
+
+        .image-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .followers-box {
+            width: 250px;
+            padding: 15px;
+            border: 2px solid black;
+            margin: 20px auto;
+            font-size: 20px;
+            height: 25px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <button id="button">Show Profile</button>
+
+    <div class="image-box">
+    </div>
+
+    <div class="followers-box">
+         
+    </div>
+
+</body>
+<script>
+    document.getElementById('button').addEventListener('click', function(){
+        const requestLink = 'https://api.github.com/users/hiteshchoudhary'
+    const xhr = new XMLHttpRequest()
+    xhr.open('GET', requestLink)
+    xhr.onreadystatechange = function(){
+     console.log(xhr.readyState);
+     if(xhr.readyState === 4){
+        const data = JSON.parse(this.responseText)
+        console.log(data.avatar_url);
+        console.log(data.followers)
+        document.querySelector('.image-box').innerHTML = `<image src = "${data.avatar_url}"></image>`
+        document.querySelector('.followers-box').innerHTML = `Followers: ${data.followers}`
+     }
+    }
+    xhr.send()
+    })
+</script>
+</html>
